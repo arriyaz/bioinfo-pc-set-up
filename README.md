@@ -1,5 +1,17 @@
 # PC Set Up for Bioinformatics Analysis
 
+> ## Enable Bash on macOS
+> Mac by default use z-shell. Most of my instructions will be bash-based. So, to enable the bash shell in MacOS run the following code in the terminal.
+> ```bash
+> chsh -s /bin/bash
+> ```
+> Then, enter your user password and restart your terminal.  
+> **Note: If you want to go back to z-shell, just run the following command and restart your terminal again**:
+> ```bash
+> chsh -s /bin/zsh
+> ```
+> 
+
 ## 1. Install `micromamba`
 
 > Read the document carefully and follow the steps in order.
@@ -17,12 +29,21 @@ Open terminal (Shortcut Key: **`Ctrl + Alt + T`**).
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
+**Code Explanation:**
+- **`sudo`**: Allows to access the system as super user or root user or administrator.
+- **`apt`**: "Advanced Package Tool". It is a package management command-line tool used in Debian-based Linux distributions, such as Ubuntu. It simplifies the process of installing, updating, and removing software on Linux systems.
+- **`update`**: Refresh the local package index to ensure the latest information about package versions from the configured repositories.
+- **`&&`**: The double ampersand (&&) is a logical AND operator in the command line. It ensures that the second command is executed only if the first command is successful.
+- **`-y`**: is optional, but it's commonly used in automated scripts or when you want to avoid manual **confirmation** during upgrades.
 
-### 1.2. Go to your home directory
-
+### 1.2. Install `curl`
+This is a command-line tool for downloading content. Currently, ubuntu doesn't contain **`curl`** by default.
 ```bash
-cd
+sudo apt install curl -y
 ```
+**Code Explanation:**
+- **`install`**: command is used in **`apt`** tool to install a package.
+
 
 ### 1.3. Create a backup copy of the `.bashrc` file
 
@@ -111,9 +132,9 @@ By using the above code we will remove all the text between these two lines.
 
 To make the terminal more user-friendly and function consistently we will create a custom profile file.
 
-The original file was created by [The Biostar Handbook](https://www.biostarhandbook.com/). So, we save the file same as their filename (**`biostar.sh`**)
+The original file was created by [The Biostar Handbook](https://www.biostarhandbook.com/). So, we save the file the same as their filename (**`biostar.sh`**)
 
-Copy the whole code and paste it in the terminal. It will create a file with the name **`.biostar.sh`** in the home directory.
+Copy the whole code and paste it on the terminal. It will create a file with the name **`.biostar.sh`** in the home directory.
 
 ```bash
 cat <<EOF > ~/.biostar.sh
