@@ -34,6 +34,7 @@ sudo apt update && sudo apt upgrade -y
 - **`apt`**: "Advanced Package Tool". It is a package management command-line tool used in Debian-based Linux distributions, such as Ubuntu. It simplifies the process of installing, updating, and removing software on Linux systems.
 - **`update`**: Refresh the local package index to ensure the latest information about package versions from the configured repositories.
 - **`&&`**: The double ampersand (&&) is a logical AND operator in the command line. It ensures that the second command is executed only if the first command is successful.
+- **`upgrade`**: command is used to upgrade installed packages to their latest versions.
 - **`-y`**: is optional, but it's commonly used in automated scripts or when you want to avoid manual **confirmation** during upgrades.
 
 ### 1.2. Install `curl`
