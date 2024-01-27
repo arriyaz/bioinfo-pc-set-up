@@ -200,10 +200,10 @@ micromamba config prepend channels conda-forge
 
 We are going the create a new environment with the name **"bioinfo"**. 
 
-We will also install the current **python** version at the same time.
+We will also install the current **python 3.10 version** version at the same time.
 
 ```bash
-micromamba create -n bioinfo python -y
+micromamba create -n bioinfo python=3.10* -y
 ```
 
 **Code Explanation:**
