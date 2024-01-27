@@ -198,7 +198,7 @@ micromamba config prepend channels conda-forge
 
 ### 2.2. Create a New Environment
 
-We are going the create a new environment with the name **"bioinfo"**. 
+We are going to create a new environment with the name **"bioinfo"**. 
 
 We will also install the **python 3.10** version at the same time.
 
@@ -221,25 +221,25 @@ micromamba activate bioinfo
 
 ### 2.4. Install Bioinformatics Software
 
-Now, we will install some bioinformatics software/tools/packages from the anaconda repository.
+Now, we will install some bioinformatics software/tools/packages from the Anaconda repository.
 
 We can install the tools one by one, or, more than one, or, from a list.
 
 ```bash
 # Install a single tool
-micromamba install trimmomatic 
+micromamba install fastqc 
 
 # Install more than one tool
-micromamba install fastqc fastp
+micromamba install trimmomatic fastp
 ```
 
 The code will ask for your confirmation **`[Y/n]`**. Type **`y`** and press **`Enter`**. Or, you can put a **`-y`** at the end of the code.
 
-**Now lets create a list of some bioinformatics tools and save it in a file. Then we will use that file to install all the tools together.**
+**Now let's create a list of some bioinformatics tools and save it in a file. Then we will use that file to install all the tools together.**
 
  Create the file and save it with the name **tools.txt**
 
-> **NB**: Keep one tool name per line. And don't forget to activate bioinfo environment.
+> **NB**: Keep one tool name per line. And don't forget to activate the bioinfo environment.
 
 ```bash
 cat <<EOF > ~/tools.txt
