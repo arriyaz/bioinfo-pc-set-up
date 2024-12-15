@@ -36,6 +36,7 @@ brew update & brew upgrade
 **Code Explanation:**
 - **`sudo`**: Allows to access the system as super user or root user or administrator.
 - **`apt`**: "Advanced Package Tool". It is a package management command-line tool used in Debian-based Linux distributions, such as Ubuntu. It simplifies the process of installing, updating, and removing software on Linux systems.
+- **`brew`**: `apt` equivalent package manager for MacOS.
 - **`update`**: Refresh the local package index to ensure the latest information about package versions from the configured repositories.
 - **`&&`**: The double ampersand (&&) is a logical AND operator in the command line. It ensures that the second command is executed only if the first command is successful.
 - **`upgrade`**: command is used to upgrade installed packages to their latest versions.
@@ -44,7 +45,11 @@ brew update & brew upgrade
 ### 1.2. Install `curl`
 This is a command-line tool for downloading content. Currently, ubuntu doesn't contain **`curl`** by default.
 ```bash
+# For Linux
 sudo apt install curl -y
+
+# For MacOS
+brew install curl
 ```
 **Code Explanation:**
 - **`install`**: command is used in **`apt`** tool to install a package.
