@@ -18,7 +18,7 @@
 >
 > Do not change the code if you are not absolutely sure what you are doing.
 
-### 1.1. Update and Upgrade Linux
+### 1.1. Update and Upgrade Packages
 
 Open terminal (Shortcut Key: **`Ctrl + Alt + T`**).
 
@@ -27,7 +27,11 @@ Open terminal (Shortcut Key: **`Ctrl + Alt + T`**).
 > **Tips 2**: At any point if your codes are messed up or maybe hanging for a long time and you want to cancel the process use **`Ctrl + c`**.
 
 ```bash
+# For Linux
 sudo apt update && sudo apt upgrade -y
+
+# For MacOS
+brew update & brew upgrade
 ```
 **Code Explanation:**
 - **`sudo`**: Allows to access the system as super user or root user or administrator.
