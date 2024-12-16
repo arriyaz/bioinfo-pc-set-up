@@ -5,11 +5,15 @@
 > ```bash
 > chsh -s /bin/bash
 > ```
-> Then, enter your user password and restart your terminal.  
+> Then, enter your user password and restart your terminal.
+>
+> 
+> 
 > **Note: If you want to go back to z-shell, just run the following command and restart your terminal again**:
 > ```bash
 > chsh -s /bin/zsh
 > ```
+>
 > 
 
 ## 1. Install `micromamba`
@@ -57,10 +61,17 @@ brew install curl
 
 ### 1.3. Create a backup copy of the `.bashrc` file
 
-The `.bashrc` is an important file for your system to function properly. `micromamba` will edit this file automatically (which is okay) for its functionality. Some if anything goes wrong your system may not work perfectly. So, to be on the safe side, before installing `micromamba`  just make a backup copy of it.
+The `.bashrc` is an important file for your system to function properly. `micromamba` will edit this file automatically (which is okay) for its functionality.  Sometime if anything goes wrong your system may not work perfectly. So, to be on the safe side, before installing `micromamba`  just make a backup copy of it.
+
+>Note: MacOS may not have this `.bashrc` file. In that case we will create a `.bashrc` file.
 
 ```bash
-cp ~/.bashrc ~/.bashrc.bkup
+if [ -f ~/.bashrc ]; then
+    cp ~/.bashrc ~/.bashrc.bkup
+else
+    echo ".bashrc file does not exist. Creating a .bashrc file..."
+    touch ~/.bashrc
+fi
 ```
 
 ### 1.4. Install `micromamba` directly and easily
@@ -103,40 +114,9 @@ That's it. Congratulations!! Micromamba installation is done!!!
 
 To learn more about micromamba go to the following link: [Mamba’s documentation!](https://mamba.readthedocs.io/en/latest/index.html)
 
-### 1.5. Uninstall `micromamba` from your PC
+> **Note: If for some reason you want to uninstall ` micromamba` from your PC, the instructions are given at the end of this file.**
 
-If for some reason you want to uninstall ` micromamba` from your PC, that's quite straight forward process. You have to just remove the relevant files and folders.
 
-```bash
-# Remove the micromamba binary file
-rm -rf ~/.local/bin/micromamba
-
-# Remove the micromamba folder
-rm -rf ~/micromamba
-```
-
-**If you installed micromamba in different locations then remove those locations.**
-
-#### Cleaning the `.bashrc` file (Optional)
-
-As `micromamba` installation added some extra lines in the `.bashrc` file. you may want to remove these lines. Run the following code in the terminal:
-
-```bash
-sed -i '/# >>> mamba initialize >>>/,/# <<< mamba initialize <<<$/d' ~/.bashrc
-```
-
-During installation `micromamba` adds some code chunk in the `.bashrc` file that starts and ends with the line `# >>> mamba initialize >>>` .
-
-By using the above code we will remove all the text between these two lines.
-
-**Code explanation:**
-
-- **`sed`**: This command stands for stream editor, and it's used for text manipulation.
-- **`-i`**: This option tells `sed` to edit files in place. In other words, the changes will be made directly to the file specified without creating a backup.
-- **`'/# >>> mamba initialize >>>/,/# <<< mamba initialize <<<$/d'`**: This is the sed script. It uses the `d` command to delete lines that match a specified range. In this case, it deletes lines between `# >>> mamba initialize >>>` and `# <<< mamba initialize <<<`.
-- **`~/.bashrc`**: This is the file on which the `sed` command will operate. In this case, it's the `~/.bashrc` file.
-
-**After running the code, restart your terminal to refresh the changes.**
 
 ### 1.6. Create a BASH profile (Optional but Recommended)
 
@@ -173,21 +153,27 @@ export LC_ALL=C
 
 # This is used on macOS to turn off zsh warning.
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# Adding 'mamba' as alias to 'micromamba'
+mamba=micromamba
 EOF
 ```
 
 **Code Explanation:** All the content between **`<<EOF`** and **`EOF`** will be saved in the **`.biostar.sh`** file.
 
-**Now link the `.biostar.sh` file with `.bashrc` file**
+**Now link the `.biostar.sh` file with `.bashrc` or `.bash_profile` file**
 
 ```bash
-cat <<EOF >> ~/.bashrc
-
-# BIOSTAR BASH PROFILE
-source ~/.biostar.sh
-# BIOSTAR BASH PROFILE
-
-EOF
+for file in ~/.bashrc ~/.bash_profile; do
+    if [ -f "$file" ]; then
+        grep -q '# >>> mamba initialize >>>' "$file" && \
+        echo >> "$file" && \
+        echo '# BIOSTAR BASH PROFILE'  >> "$file" && \
+        echo 'source ~/.biostar.sh' >> "$file" && \
+        echo '# BIOSTAR BASH PROFILE' >> "$file" && \
+        echo >> "$file"
+    fi
+done
 ```
 
 **After running the code, restart your terminal to refresh the changes.**
@@ -203,6 +189,7 @@ Thus you are adding `conda-forge` later and it will be on the top of the priorit
 ```bash
 micromamba config prepend channels bioconda
 micromamba config prepend channels conda-forge
+
 ```
 
 ### 2.2. Create a New Environment
@@ -236,9 +223,10 @@ We can install the tools one by one, or, more than one, or, from a list.
 
 ```bash
 # Install a single tool
-micromamba install fastqc 
-
-# Install more than one tool
+micromamba install fastqc
+```
+```bash
+# Or, install more than one tool
 micromamba install trimmomatic fastp
 ```
 
@@ -258,6 +246,8 @@ blast
 bowtie2
 bwa
 emboss
+fastqc
+fastp
 hisat2
 mafft
 minimap2
@@ -266,6 +256,7 @@ parallel
 samtools>=1.14
 seqkit
 seqtk
+trimmomatic
 ucsc-bedgraphtobigwig
 EOF
 ```
@@ -283,3 +274,49 @@ Each time you use one or more tools from this environment, you have to first act
 That's it !! :boom:
 
 Happy Learning !! :blush:
+
+
+# 3. Uninstall `micromamba` from your PC
+
+If for some reason you want to uninstall ` micromamba` from your PC, that's quite straight forward process. You have to just remove the relevant files and folders.
+
+```bash
+# Remove the micromamba binary file
+rm -rf ~/.local/bin/micromamba
+
+# Remove the micromamba folder
+rm -rf ~/micromamba
+```
+
+**If you installed micromamba in different locations then remove those locations.**
+
+#### Cleaning the `.bashrc` file (Optional)
+
+As `micromamba` installation added some extra lines in the `.bashrc` or in `.bash_profile` file. you may want to remove these lines. Run the following code in the terminal:
+
+```bash
+for file in ~/.bashrc ~/.bash_profile; do
+    if [ -f "$file" ]; then
+        grep -q '# >>> mamba initialize >>>' "$file" && {
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                sed -i '' '/# >>> mamba initialize >>>/,/# <<< mamba initialize <<<$/d' "$file"  # macOS
+            else
+                sed -i '/# >>> mamba initialize >>>/,/# <<< mamba initialize <<<$/d' "$file"   # Linux
+            fi
+        }
+    fi
+done
+```
+
+During installation `micromamba` adds some code chunk in the `.bashrc` file that starts and ends with the line `# >>> mamba initialize >>>` .
+
+By using the above code we will remove all the text between these two lines.
+
+**Code explanation:**
+
+- **`sed`**: This command stands for stream editor, and it's used for text manipulation.
+- **`-i`**: This option tells `sed` to edit files in place. In other words, the changes will be made directly to the file specified without creating a backup.
+- **`'/# >>> mamba initialize >>>/,/# <<< mamba initialize <<<$/d'`**: This is the sed script. It uses the `d` command to delete lines that match a specified range. In this case, it deletes lines between `# >>> mamba initialize >>>` and `# <<< mamba initialize <<<`.
+- **`~/.bashrc`**: This is the file on which the `sed` command will operate. In this case, it's the `~/.bashrc` file.
+
+**After running the code, restart your terminal to refresh the changes.**
